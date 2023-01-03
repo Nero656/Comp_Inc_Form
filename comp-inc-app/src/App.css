@@ -1,0 +1,50 @@
+.body{
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.auth{
+    /*padding: 42px 24px 50px;*/
+    padding: 2em 1em 0 1em;
+    border: 1px solid rgba(5, 5, 5, 0.06);
+    border-radius: 6px;
+}
+
+.header{
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.stack_item{
+    filter: grayscale(100%);
+    transition: .5s;
+}
+
+.stack_item h6{
+    text-align: center;
+}
+
+.stack_item:hover{
+    filter: grayscale(0);
+    cursor: pointer;
+}
+
+.Statuses{
+    /*width: 75%;*/
+}
+
+.tabs{
+    width: 100%;
+}
+
+.destroyBTN{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 500;
+}
