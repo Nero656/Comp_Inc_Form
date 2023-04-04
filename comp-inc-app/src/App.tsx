@@ -27,6 +27,8 @@ import ShowMedicalTestRes from "./views/User/medical/showMedicalTestRes";
 import DaveList from "./views/User/Dive/List"
 import DavePreview from "./views/User/Dive/Preview"
 import DaveCreate from "./views/User/Dive/Create"
+import IssueACertificate from "./views/AdminPages/Сertificates/Main";
+
 import './App.css';
 import {Space} from "antd";
 
@@ -70,7 +72,7 @@ export default function App() {
                     <Route path={':/GymAdmin'} element={<GymAdmin/>}/>
                     <Route path={':/ReservoirsAdmin'} element={<ReservoirsAdmin/>}/>
                     {/*<Route path={':/partners'} element={<PartnersAdmin/>}/>*/}
-                    {/*<Route path={':/issue_a_certificate'} element={<IssueACertificate/>}/>*/}
+                    <Route path={':/issue_a_certificate'} element={<IssueACertificate/>}/>
                     <Route path={':/user-request'} element={<UserRequestList/>}/>
                     <Route path={':/Services'} element={<Services/>}/>
                     <Route path={'/DiveList/:id'} element={<DaveList/>}/>
