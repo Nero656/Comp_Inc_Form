@@ -28,6 +28,22 @@ class UserController extends Controller
         return User::all();
     }
 
+    public function userList()
+    {
+        return User::UserList();
+    }
+
+    public function TrainerList()
+    {
+        return User::TrainerList();
+    }
+
+    public function TrainerUpdate($id, $trainer_id)
+    {
+        return User::TrainerAppend($id, $trainer_id);
+    }
+
+
     /**
      * @param UserRequest $request
      * @return mixed
@@ -41,11 +57,11 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\User $user
-     * @return User
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function show(User $user)
     {
-        return $user;
+        return User::UserInfo($user);
     }
 
     /**

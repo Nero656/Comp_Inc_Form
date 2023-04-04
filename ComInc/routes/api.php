@@ -2,10 +2,23 @@
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ScheduleController;
 use \App\Http\Controllers\ServiceController;
 use \App\Http\Controllers\StatusController;
 use \App\Http\Controllers\StackController;
 use \App\Http\Controllers\PartnerController;
+use \App\Http\Controllers\GymController;
+use \App\Http\Controllers\EquipmentController;
+use \App\Http\Controllers\CategoryEquipmentController;
+use \App\Http\Controllers\CertificateController;
+use \App\Http\Controllers\DivingPermitController;
+use \App\Http\Controllers\DiveTypeController;
+use \App\Http\Controllers\theoreticalLessonsController;
+use \App\Http\Controllers\theoreticalLessonsTypeController;
+use \App\Http\Controllers\DiveController;
+use \App\Http\Controllers\ReservoirsController;
+use \App\Http\Controllers\ReservoirsTypeController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,16 +44,93 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/user')->group(function (){
     Route::post('/registration', [UserController::class, 'store']);
     Route::post('/auth', [UserController::class, 'auth']);
+    Route::middleware('auth:api')->get('/show/{user}', [UserController::class, 'show']);
     Route::middleware('auth:api')->get('/show', [UserController::class, 'index']);
     Route::middleware('auth:api')->get('/all', [UserController::class, 'indexList']);
+    Route::middleware('auth:api')->get('/users', [UserController::class, 'userList']);
+    Route::middleware('auth:api')->get('/trainerList', [UserController::class, 'TrainerList']);
+    Route::middleware('auth:api')->put('/TrainerAppend/{user_id}/{trainer_id}',
+        [UserController::class, 'TrainerUpdate']);
     Route::middleware('auth:api')->patch('/update', [UserController::class, 'update']);
+});
+
+Route::prefix('/gym')->group(function (){
+    Route::get('/all', [GymController::class, 'index']);
+    Route::get('/gym_types', [GymController::class, 'gymTypes']);
+    Route::middleware('auth:api')->post('/', [GymController::class, 'create']);
+    Route::middleware('auth:api')->patch('/{gym}', [GymController::class, 'update']);
+    Route::get('/{gym}', [GymController::class, 'show']);
+    Route::middleware('auth:api')->delete('/{gym}', [GymController::class, 'destroy']);
+});
+
+Route::prefix('/Certificate')->group(function (){
+    Route::get('/types', [CertificateController::class, 'getCertificateTypes']);
+    Route::post('/make', [CertificateController::class, 'store']);
+    Route::get('/list/{user_id}', [CertificateController::class, 'userAll']);
+});
+
+Route::prefix('/diving/permitList')->group(function (){
+    Route::post('/', [DivingPermitController::class, 'store']);
+    Route::get('/{user_id}',[DivingPermitController::class, 'getList']);
+    Route::get('/permit/{permit_id}',[DivingPermitController::class, 'getPermit']);
+    Route::put('/permitTrue/{permit_id}',[DivingPermitController::class, 'getPermitTrue']);
+    Route::put('/permitFalse/{permit_id}',[DivingPermitController::class, 'getPermitFalse']);
+    Route::get('/getStatus/{user_id}',[DivingPermitController::class, 'getStatus']);
+});
+
+
+Route::prefix('/Schedule')->group(function (){
+    Route::get('/{id}/{data}', [ScheduleController::class, 'count']);
+});
+
+Route::prefix('/equip')->group(function (){
+    Route::get('/{equip}', [EquipmentController::class, 'show']);
+    Route::post('/', [EquipmentController::class, 'store']);
+});
+
+
+Route::prefix('/Category')->group(function (){
+    Route::get('/', [CategoryEquipmentController::class, 'index']);
+    Route::post('/', [CategoryEquipmentController::class, 'store']);
+});
+
+Route::prefix('/theoretical/lessons/type')->group(function (){
+    Route::get('/', [theoreticalLessonsTypeController::class, 'index']);
+//    Route::post('/', [CategoryEquipmentController::class, 'store']);
+});
+Route::prefix('/dive/types')->group(function (){
+    Route::get('/', [DiveTypeController::class, 'index']);
+});
+
+Route::prefix('/dive')->group(function (){
+    Route::get('/', [DiveController::class, 'index']);
+    Route::post('/', [DiveController::class, 'store']);
+    Route::get('/{user_id}', [DiveController::class, 'list']);
+    Route::get('/preview/{dive}', [DiveController::class, 'show']);
+});
+
+Route::prefix('/reservoirs')->group(function (){
+    Route::get('/', [ReservoirsController::class, 'index']);
+    Route::post('/', [ReservoirsController::class, 'store']);
+    Route::get('/{id}', [ReservoirsController::class, 'show']);
+    Route::get('/types', [ReservoirsController::class, 'types']);
+    Route::delete('/{reservoirs}', [ReservoirsController::class, 'destroy']);
+});
+
+Route::prefix('/reservoirs_types')->group(function (){
+    Route::get('/', [ReservoirsTypeController::class, 'index']);
+});
+
+
+Route::prefix('/theoretical/lessons')->group(function (){
+    Route::get('/{user_id}', [theoreticalLessonsController::class, 'getList']);
+    Route::post('/', [theoreticalLessonsController::class, 'store']);
 });
 
 Route::prefix('/service')->group(function (){
     Route::get('/all', [ServiceController::class, 'index']);
-    Route::middleware('auth:api')->post('/', [ServiceController::class, 'store']);
-    Route::middleware('auth:api')->patch('/{service}', [ServiceController::class, 'update']);
-    Route::middleware('auth:api')->get('/{service}', [ServiceController::class, 'show']);
+    Route::post('/sub/{user_id}/{ser_id}', [ServiceController::class, 'subscribe']);
+    Route::post('/sub/{user_id}', [ServiceController::class, 'subscriptions']);
     Route::middleware('auth:api')->delete('/{service}', [ServiceController::class, 'destroy']);
 });
 

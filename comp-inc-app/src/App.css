@@ -9,7 +9,8 @@
 
 .auth{
     /*padding: 42px 24px 50px;*/
-    padding: 2em 1em 0 1em;
+    max-width: 5135px;
+    padding: 2em 1.5em 0 1.5em;
     border: 1px solid rgba(5, 5, 5, 0.06);
     border-radius: 6px;
 }
@@ -47,4 +48,12 @@
     top: 5px;
     right: 5px;
     z-index: 500;
+}
+
+.profileFrame{
+    float: left;
+    border: 0.1px solid rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: start;
 }

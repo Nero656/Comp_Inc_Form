@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic;
 
@@ -14,36 +15,43 @@ class Service extends Model
     protected $fillable = [
         'id',
         'name',
-        'image_url',
-        'background_color'
+        'description',
+        'price'
     ];
 
-
-    public static function inst($request)
-    {
-        return self::create(
-            [
-                'name' => $request->name,
-                'background_color' => $request->background_color,
-                "image_url" => ($request->file('image_url') !== null) ?
-                    Avatar::image_url($request->file('image_url'), 250, 250) : '',
-            ]);
-    }
-
-    public static function edit($request, $service)
+    public static function Subscribe($user_id, $service_id)
     {
 
-        $update = [
-            "name" => ($request->name !== null) ? $request->name : $service->name,
-            "background_color" => ($request->background_color !== null) ? $request->background_color : $service->background_color,
-            "image_url" => ($request->file('image_url') !== null) ?
-                Avatar::image_url($request->file('image_url'), 250, 250) : '',
-        ];
+        $exist = DB::table('additional_services')
+            ->where('user_id', '=', $user_id)
+            ->where('service_id', '=', $service_id)->exists();
 
-        $service->update(array_merge($request->all(), $update));
 
-        return response([
-            'You update service' => $service
-        ])->setStatusCode(201);
+        if ($exist == 1) {
+            $status = DB::table('additional_services')
+                ->select('status')
+                ->where('user_id', '=', $user_id)
+                ->where('service_id', '=', $service_id)->first();
+
+            if ($status->status) {
+                DB::table('additional_services')
+                    ->where('user_id', '=', $user_id)
+                    ->where('service_id', '=', $service_id)
+                    ->where('status', '=', true)
+                    ->update(['status' => false]);
+            } else {
+                DB::table('additional_services')
+                    ->where('user_id', '=', $user_id)
+                    ->where('service_id', '=', $service_id)
+                    ->where('status', '=', false)
+                    ->update(['status' => true]);
+            }
+        } else {
+            DB::table('additional_services')->
+            insert(['user_id' => $user_id, 'service_id' => $service_id, 'status' => true]);
+        }
+
+        return DB::table('additional_services')->where('user_id', '=', $user_id)
+            ->where('service_id', '=', $service_id)->get();
     }
 }

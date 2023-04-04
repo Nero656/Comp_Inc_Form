@@ -28,8 +28,9 @@ export default function AboutDev() {
     return (
         <Form
             name="basic"
-            labelCol={{span: 4}}
-            wrapperCol={{span: 16}}
+            labelCol={{span: 30}}
+            layout ={'vertical'}
+            wrapperCol={{span: 30}}
             initialValues={{remember: true}}
             autoComplete="off"
             className={'auth col-lg-5'}
@@ -51,8 +52,8 @@ export default function AboutDev() {
                 <Input.Password {...password.bind}/>
             </Form.Item>
 
-            <Form.Item wrapperCol={{offset: 17, span: 16}}>
-                <Button type="primary" htmlType="submit" onClick={sendAuth}>
+            <Form.Item wrapperCol={{offset: 0, span: 0}}>
+                <Button type="primary" htmlType="submit" onClick={sendAuth} style={{ width: '100%' }}>
                     Войти
                 </Button>
             </Form.Item>

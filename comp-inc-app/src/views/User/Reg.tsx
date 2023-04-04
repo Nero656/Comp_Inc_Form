@@ -109,14 +109,13 @@ export default function Reg() {
             <Form.Item
                 label="Аватарка"
                 name="avatar"
-                rules={[{required: false, message: 'Пожалуйста введите ваш пароль!'}]}
             >
                 <input type='file' onClick={fileUpload}/>
             </Form.Item>
 
 
             <Form.Item wrapperCol={{offset: 17, span: 16}}>
-                <Button type="primary" htmlType="submit" onClick={sendReg}>
+                <Button type="primary" htmlType="submit" onClick={sendReg} style={{ width: '100%' }}>
                     Зарегистрироваться
                 </Button>
             </Form.Item>

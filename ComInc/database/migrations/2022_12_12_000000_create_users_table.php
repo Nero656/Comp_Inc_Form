@@ -22,10 +22,14 @@ return new class extends Migration
             $table->string('telephone')->unique();
             $table->string('password');
             $table->string('api_token')->nullable();
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->default('/default_img/user-default.png')->nullable();
+            $table->integer('instructor_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')
+                ->on('roles')->onDelete('cascade');
+            $table->foreign('instructor_id')->references('id')
+                ->on('users')->onDelete('cascade');
         });
     }
 

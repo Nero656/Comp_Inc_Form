@@ -24,5 +24,15 @@ class roleSeeder extends Seeder
                 'role' => 'user',
             ]
         );
+        DB::table('roles')->insert(
+            [
+                'role' => 'trainer',
+            ]
+        );
+        DB::table('roles')->insert(
+            [
+                'role' => 'moderator',
+            ]
+        );
     }
 }

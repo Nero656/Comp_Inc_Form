@@ -23,4 +23,15 @@ class Avatar extends Model
 
         return Storage::url($fileDir . $image->basename);
     }
+    public static function image_url_no_resize($file)
+    {
+        $fileName = uniqid();
+
+        $image = ImageManagerStatic::make($file)
+            ->save(storage_path('app/public/images' . $fileName . '.webp'), 100, 'webp');
+
+        $fileDir = 'public/';
+
+        return Storage::url($fileDir . $image->basename);
+    }
 }

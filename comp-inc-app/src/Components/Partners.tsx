@@ -11,7 +11,7 @@ type itemsType = [
     }
 ]
 
-const {confirm} = Modal;
+const {confirm} = Modal
 
 export default function Services() {
     const [error, setError] = useState(null)

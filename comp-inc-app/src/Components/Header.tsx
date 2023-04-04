@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import type {MenuProps} from 'antd';
 import {Button, Dropdown, Avatar, Space} from 'antd';
 import Config from "./Config";
-import {UserOutlined} from "@ant-design/icons";
 export default function Header() {
     const exit = () => {
         localStorage.removeItem('User')
@@ -12,17 +11,17 @@ export default function Header() {
     }
     const items: MenuProps['items'] = [
         {
-            key: '1',
+            key: '0',
             label: (
-                <Link to={'/RequestList/user/'+Config.User().id}>
+                <a href={'/UserPage/'+Config.User().id}>
                     <Button type="link" size={'large'}>
-                        Список заявок
+                        Мой профиль
                     </Button>
-                </Link>
+                </a>
             ),
         },
         {
-            key: '2',
+            key: '1',
             label: (
                 <Button type="link" danger size={'large'} onClick={exit}>
                     Выйти
@@ -34,41 +33,66 @@ export default function Header() {
         <Navbar collapseOnSelect expand="xl" bg="dark" variant="dark" className={'header'} style={{position: 'fixed'}}>
             <Container>
                 <Link style={{textDecoration: 'none'}} to={'/'}>
-                    <Navbar.Brand>Comp_Inc</Navbar.Brand>
+                    <img
+                        alt=""
+                        src="/LogoShark.png"
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                    />{' '}
+                    <Navbar.Brand>Shark</Navbar.Brand>
                 </Link>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         {localStorage.getItem('User') !== null &&
                             <>
-                                <Link to={':/Request'}>
+
+                                <Link to={':/user-request'}>
                                     <Button type="text" style={{color: "white"}}>
-                                        падать заявку
+                                        пользователи
                                     </Button>
                                 </Link>
 
+                                <Link to={':/Equipments'}>
+                                    <Button type="text" style={{color: "white"}}>
+                                        Оборудование для дайвинга
+                                    </Button>
+                                </Link>
+
+                                <Link to={':/Services'}>
+                                    <Button type="text" style={{color: "white"}}>
+                                       Услуги
+                                    </Button>
+                                </Link>
                                 {Config.User().role_id === 1 &&
                                     <>
-                                        <Link to={':/service'}>
-                                            <Button type="text" style={{color: "white"}}>Управление сервисами</Button>
+
+
+                                        <Link to={':/TheoreticalLessons'}>
+                                            <Button type="text" style={{color: "white"}}>Управление Теор.занятиями</Button>
                                         </Link>
-                                        <Link to={':/stack'}>
+
+                                        {/*<Link to={':/stack'}>*/}
+                                        {/*    <Button type="text" style={{color: "white"}}>*/}
+                                        {/*        Управление технологиями*/}
+                                        {/*    </Button>*/}
+                                        {/*</Link>*/}
+                                        {/*<Link to={':/partners'}>*/}
+                                        {/*    <Button type="text" style={{color: "white"}}>*/}
+                                        {/*        Управление партнерами*/}
+                                        {/*    </Button>*/}
+                                        {/*</Link>*/}
+
+                                        <Link to={':/issue_a_certificate'}>
                                             <Button type="text" style={{color: "white"}}>
-                                                Управление технологиями
+                                                Управление сертификатами
                                             </Button>
                                         </Link>
-                                        <Link to={':/partners'}>
-                                            <Button type="text" style={{color: "white"}}>
-                                                Управление партнерами
-                                            </Button>
-                                        </Link>
-                                        <Link to={':/user-request'}>
-                                            <Button type="text" style={{color: "white"}}>
-                                                Список заявок пользователей
-                                            </Button>
-                                        </Link>
+
                                     </>
                                 }
+
                             </>
                         }
                     </Nav>
@@ -79,14 +103,8 @@ export default function Header() {
                                    style={{color: "white", cursor: "pointer"}}>
                                     <Space>
                                         {Config.User().name}
-                                        {Config.User().avatar != null &&
-                                            <Avatar size={25} style={{marginLeft: '10px'}}
-                                                    src={Config.adds() + Config.User().avatar}/>
-                                        }
-                                        {Config.User().avatar === null &&
-                                            <Avatar size={25} style={{marginLeft: '10px'}}
-                                                    icon={<UserOutlined size={35}/>}/>
-                                        }
+                                        <Avatar size={25} shape={'square'} style={{marginLeft: '10px'}}
+                                                src={Config.adds() + Config.User().avatar}/>
                                     </Space>
                                 </a>
                             </Dropdown>

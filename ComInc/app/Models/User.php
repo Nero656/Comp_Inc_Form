@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Http\Requests\UserRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -30,6 +26,7 @@ class User extends Authenticatable
         'avatar',
         'api_token',
         'role_id',
+        'instructor_id'
     ];
 
 
@@ -65,6 +62,23 @@ class User extends Authenticatable
         ])->setStatusCode(201);
     }
 
+    public static function UserList(){
+        return self::where('role_id', '=', 2)->orWhere('role_id', '=', 3)->get();
+    }
+
+    public static function TrainerList(){
+        return self::where('role_id', '=', 3)->get();
+    }
+
+    public static function TrainerAppend($id, $trainer_id){
+        return self::where('id', '=', $id)->update(['instructor_id' => $trainer_id])->get();
+
+    }
+
+    public static function UserInfo(User $user){
+        return $user;
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -83,4 +97,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'instructor_id');
+    }
 }

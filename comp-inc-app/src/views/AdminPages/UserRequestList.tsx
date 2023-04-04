@@ -53,7 +53,7 @@ export default function UserRequestList() {
                         {item.avatar !== null &&
                             <List.Item.Meta
                                 avatar={<Avatar src={Config.adds()+item.avatar}/>}
-                                title={<Link to={'/RequestList/user/'+item.id}>{item.name}</Link>}
+                                title={<Link to={'/UserPage/'+item.id}>{item.name}</Link>}
                                 description={item.email}
                             />
                         }
@@ -62,7 +62,7 @@ export default function UserRequestList() {
                             <List.Item.Meta
                                 avatar={<Avatar size={25} style={{marginLeft: '10px'}}
                                                 icon={<UserOutlined size={35}/>}/>}
-                                title={<Link to={'/RequestList/user/'+item.id}>{item.name}</Link>}
+                                title={<Link to={'/UserPage/'+item.id}>{item.name}</Link>}
                                 description={item.email}
                             />
                         }
